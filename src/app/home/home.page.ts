@@ -17,7 +17,7 @@ export class HomePage {
         intent: 'INTENT'
       }
     }
-    this.sms.send('662793549', 'Sms z aplikacji! Daj znac Albkowi jak dojdzie', options).then(() => {
+    this.sms.send('792036750', 'Sms z aplikacji! Daj znac Albkowi jak dojdzie').then(() => {
       alert('doszlo');
     }).catch((error) => {
       alert(error);
