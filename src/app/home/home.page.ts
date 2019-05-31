@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SMS } from '@ionic-native/sms/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @Component({
   selector: 'app-home',
@@ -8,19 +9,34 @@ import { SMS } from '@ionic-native/sms/ngx';
 })
 export class HomePage {
 
-  constructor(private sms: SMS) {}
+  constructor(private sms: SMS, private androidPermissions: AndroidPermissions) {
+    this.androidPermissions.requestPermissions(
+      [this.androidPermissions.PERMISSION.CAMERA, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
+
+    this.androidPermissions.requestPermission(
+      this.androidPermissions.PERMISSION.SEND_SMS).then(
+        success => {
+        console.log('SEND_SMS: ');
+        this.sendSMS();
+    });
+  }
 
   sendSMS() {
-    var options = {
+    const options = {
       replaceLineBreaks: true,
       android: {
         intent: 'INTENT'
       }
-    }
-    this.sms.send('792036750', 'Sms z aplikacji! Daj znac jak dojdzie').then(() => {
+    };
+
+    // this.sms.hasPermission().then((elo) =>  {
+    //   alert('sms has permission: ' + elo);
+    // });
+
+    this.sms.send('792036750', 'KCKCKCKC').then(() => {
       alert('doszlo');
     }).catch((error) => {
-      alert(error);
+      alert('error:' + error);
     });
   }
 
